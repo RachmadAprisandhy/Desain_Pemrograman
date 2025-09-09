@@ -1,0 +1,58 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(to right, #dbeafe, #fef9c3); 
+    line-height: 1.65;
+}
+
+.container-satu {
+    width: 1000px;
+    margin: 30px auto;
+    background-color: #fff;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    gap: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+
+.kolom-utama {
+    flex: 2;
+}
+
+.sidebar-satu, .sidebar-dua {
+    flex: 1;
+    background: #f1f5f9;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+
+.sidebar-satu ul {
+    list-style: none;
+    padding: 0;
+}
+.sidebar-satu li {
+    margin: 8px 0;
+}
+.sidebar-satu a {
+    text-decoration: none;
+    color: #2563eb;
+}
+.sidebar-satu a:hover {
+    text-decoration: underline;
+}
+
+
+.gambar-artikel {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
