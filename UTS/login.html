@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — KostHub</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-box {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 32px;
+      width: 100%;
+      max-width: 400px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .login-box h1 {
+      text-align: center;
+      color: #2563eb;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .login-box h2 {
+      font-size: 20px;
+      color: #333;
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 4px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      border: none;
+      border-bottom: 2px solid #ccc;
+      padding: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #2563eb;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-wrapper button {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: #666;
+    }
+
+    .forgot {
+      text-align: right;
+      margin-top: 4px;
+      margin-bottom: 16px;
+    }
+
+    .forgot a {
+      font-size: 13px;
+      color: #2563eb;
+      text-decoration: none;
+    }
+
+    .forgot a:hover {
+      text-decoration: underline;
+    }
+
+    .login-btn {
+      background: #2563eb;
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 10px;
+      border-radius: 25px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .login-btn:hover {
+      background: #1e40af;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 20px 0;
+      color: #777;
+      font-size: 14px;
+    }
+
+    .divider hr {
+      flex: 1;
+      border: none;
+      height: 1px;
+      background: #ddd;
+    }
+
+    .divider span {
+      padding: 0 8px;
+    }
+
+    .register-btn {
+      width: 100%;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 25px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .register-btn:hover {
+      background: #f0f0f0;
+    }
+
+    .language {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .language select {
+      background: transparent;
+      border: none;
+      font-size: 13px;
+      color: #555;
+      cursor: pointer;
+      outline: none;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <h1>KostHub</h1>
+    <h2>Login</h2>
+
+    <form id="loginForm">
+      <div>
+        <label for="email">Email atau Username</label>
+        <input type="text" id="email" required>
+      </div>
+
+      <div class="password-wrapper" style="margin-top: 16px;">
+        <label for="password">Password</label>
+        <input type="password" id="password" required>
+        <button type="button" id="togglePassword">👁️</button>
+      </div>
+
+      <div class="forgot">
+        <a href="#">Lupa password?</a>
+      </div>
+
+      <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <div class="divider">
+      <hr><span>atau</span><hr>
+    </div>
+    <button class="register-btn" onclick="window.location.href='register.html'">Buat akun baru</button>
+    <div class="language">
+      <select>
+        <option>Bahasa Indonesia</option>
+        <option>English</option>
+      </select>
+    </div>
+  </div>
+
+<script>
+  const togglePassword = document.getElementById('togglePassword');
+  const passwordInput = document.getElementById('password');
+  const loginForm = document.getElementById('loginForm');
+
+  togglePassword.addEventListener('click', () => {
+    const type = passwordInput.type === 'password' ? 'text' : 'password';
+    passwordInput.type = type;
+    togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
+  });
+
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = passwordInput.value;
+
+    if (!email || !password) {
+      alert("Harap isi semua kolom.");
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:3000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        alert(data.message);
+        return;
+      }
+
+      const roleMap = {
+        1: 'admin',
+        2: 'pemilik_kost',
+        3: 'penyewa'
+      };
+
+      const role = data.role || roleMap[data.role_id] || 'tidak_dikenal';
+      const username = data.username || 'Pengguna';
+
+      alert(`Login berhasil untuk: ${username} (${role})`);
+
+      if (role === 'admin') {
+        window.location.href = 'admin.html';
+      } else if (role === 'pemilik_kost') {
+        window.location.href = 'Beranda.html';
+      } else if (role === 'penyewa') {
+        window.location.href = 'Beranda.html';
+      } else {
+        alert('Role tidak dikenal.');
+      }
+
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Gagal login. Periksa koneksi ke server.');
+    }
+  });
+</script>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel — KostHub</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f3f4f6;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #2563eb;
+      text-align: center;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #2563eb;
+      color: white;
+    }
+    tr:hover {
+      background-color: #f1f5f9;
+    }
+    button {
+      border: none;
+      border-radius: 6px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+    .delete-btn { background: #dc2626; color: white; }
+    .block-btn { background: #f59e0b; color: white; }
+  </style>
+</head>
+<body>
+
+  <h1>Admin Panel — KostHub</h1>
+
+  <table id="userTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Status</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+  async function loadUsers() {
+    const res = await fetch("http://localhost:3000/api/users");
+    const users = await res.json();
+
+    const tbody = document.querySelector("#userTable tbody");
+    tbody.innerHTML = "";
+
+    users.forEach(u => {
+      const statusText = 
+        u.status === "blocked" ? "Diblokir" :
+        u.status === "aktif" ? "Aktif" :
+        "Tidak Diketahui";
+      const statusColor =
+        u.status === "blocked" ? "#dc2626" : 
+        "#16a34a";
+
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${u.id}</td>
+        <td>${u.username}</td>
+        <td>${u.email}</td>
+        <td>${u.role}</td>
+        <td style="color: white; background:${statusColor}; border-radius: 6px; text-align:center;">${statusText}</td>
+        <td>
+          <button class="block-btn" onclick="blockUser(${u.id})">Blokir</button>
+          <button class="delete-btn" onclick="deleteUser(${u.id})">Hapus</button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  async function deleteUser(id) {
+    if (!confirm("Yakin ingin menghapus user ini?")) return;
+    await fetch(`http://localhost:3000/api/users/${id}`, { method: "DELETE" });
+    loadUsers();
+  }
+
+  async function blockUser(id) {
+    await fetch(`http://localhost:3000/api/users/${id}/block`, { method: "PUT" });
+    loadUsers();
+  }
+
+  loadUsers();
+</script>
+
+</body>
+</html>

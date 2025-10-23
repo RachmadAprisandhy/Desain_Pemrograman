@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload Kost - KostHub</title>
+  <style>
+
+    body {
+        background-image: url('gambar3.jpeg'); 
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="file"],
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    input[type="file"] {
+      padding: 5px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      background-color: #2e7dff;
+      color: #fff;
+      padding: 12px;
+      border: none;
+      width: 100%;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #1557b0;
+    }
+
+    img {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 5px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .hasil {
+      background: #f9f9f9;
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      display: none;
+    }
+
+    .hasil img {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .hasil p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .hasil strong {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Upload Kost Baru</h1>
+    <form id="kostForm">
+      <label for="nama">Nama Kost</label>
+      <input type="text" id="nama" name="nama" placeholder="Contoh: Kost Mawar" required>
+
+      <label for="gambar">Upload Gambar</label>
+      <input type="file" id="gambar" name="gambar" accept="image/*" required>
+      <img id="preview" alt="Preview Gambar">
+
+      <label for="fasilitas">Fasilitas Kost</label>
+      <textarea id="fasilitas" name="fasilitas" rows="3" placeholder="Contoh: Kamar mandi dalam, Wi-Fi, Dapur bersama..." required></textarea>
+
+      <label for="harga">Harga Sewa (per bulan)</label>
+      <input type="number" id="harga" name="harga" placeholder="Contoh: 750000" required>
+
+      <button type="submit">Upload Kost</button>
+    </form>
+
+    <div class="hasil" id="hasil">
+      <h3>✅ Kost Berhasil Diupload:</h3>
+      <img id="hasilGambar" alt="Gambar Kost">
+      <p><strong>Nama Kost:</strong> <span id="hasilNama"></span></p>
+      <p><strong>Fasilitas:</strong> <span id="hasilFasilitas"></span></p>
+      <p><strong>Harga:</strong> Rp <span id="hasilHarga"></span>/bulan</p>
+    </div>
+  </div>
+
+  <script>
+    const gambarInput = document.getElementById('gambar');
+    const preview = document.getElementById('preview');
+
+    gambarInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.style.display = 'none';
+      }
+    });
+
+    document.getElementById('kostForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const nama = document.getElementById('nama').value;
+      const fasilitas = document.getElementById('fasilitas').value;
+      const harga = document.getElementById('harga').value;
+      const gambarURL = preview.src;
+
+      document.getElementById('hasilNama').textContent = nama;
+      document.getElementById('hasilFasilitas').textContent = fasilitas;
+      document.getElementById('hasilHarga').textContent = harga;
+      document.getElementById('hasilGambar').src = gambarURL;
+
+      document.getElementById('hasil').style.display = 'block';
+      this.reset();
+      preview.style.display = 'none';
+    });
+  </script>
+</body>
+</html>

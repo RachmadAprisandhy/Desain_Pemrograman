@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KostHub — Cari & Sewa Kost Mudah</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav id="navbar">
+    <div class="logo">KostHub</div>
+    <div class="nav-menu">
+      <a href="#hero">Beranda</a>
+      <a href="#daftar">Cari Kost</a>
+      <a href="#tentang">Tentang</a>
+      <a href="#kontak">Kontak</a>
+    </div>
+    <div class="nav-auth">
+      <a href="login.html" class="btn-outline">Masuk</a>
+      <a href="login.html" class="btn-outline">Daftar</a>
+    </div>
+  </nav>
+
+  <section id="hero">
+    <video class="background-video" autoplay muted loop playsinline>
+      <source src="videokost.mp4" type="video/mp4" />
+    </video>
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Temukan Kost Impianmu & Mulai Hidup Nyaman</h1>
+      <p>Bergabunglah dengan komunitas KostHub dan temukan tempat tinggal terbaik sesuai kebutuhanmu.</p>
+      <a href="#daftar" class="btn-primary">Cari Kost Sekarang</a>
+    </div>
+  </section>
+
+  <section id="daftar" class="fitur-section">
+    <div class="fitur-grid">
+
+      <div class="fitur-card" onclick="window.location.href='cariKost.html'">
+        <div class="fitur-icon">🏠</div>
+        <h3>Cari Kost</h3>
+        <p>Temukan kost sesuai lokasi, harga, dan fasilitas yang kamu butuhkan.</p>
+      </div>
+
+      <div class="fitur-card">
+        <div class="fitur-icon">📸</div>
+        <h3>Lihat Detail</h3>
+        <p>Lihat foto dan informasi lengkap setiap kost sebelum kamu sewa.</p>
+      </div>
+
+      <div class="fitur-card" onclick="window.location.href='sewaKost.html'">
+        <div class="fitur-icon">💰</div>
+        <h3>Sewa Mudah</h3>
+        <p>Ajukan sewa secara online, aman dan cepat.</p>
+      </div>
+
+      <div class="fitur-card">
+        <div class="fitur-icon">🤝</div>
+        <h3>Referensikan</h3>
+        <p>Ajak temanmu dan dapatkan bonus setiap mereka menyewa kost.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section">
+  <div class="info-item">
+    <div class="info-image">
+      <img src="gambar1.jpg" alt="Kost Mawar">
+    </div>
+    <div class="info-text">
+      <h2>Kost Mawar</h2>
+      <p>
+        Kost Mawar Indah merupakan pilihan hunian nyaman yang berlokasi strategis di pusat kota Malang.
+        Kost ini hanya berjarak sekitar 10 menit dari kampus dan dekat dengan berbagai fasilitas umum seperti minimarket, warung makan, serta halte transportasi umum. 
+        Setiap kamar dilengkapi dengan tempat tidur, lemari pakaian, meja belajar, dan kipas angin. 
+        Lingkungan kost tenang dengan sistem keamanan 24 jam dan akses kunci pribadi.
+      </p>
+      <button class="info-button"> lihat detail </button>
+    </div>
+  </div>
+
+  <div class="info-item reverse">
+    <div class="info-image">
+      <img src="gambar2.jpeg" alt="Kost Sejahtera">
+    </div>
+    <div class="info-text">
+      <h2>Kost Sejahtera</h2>
+      <p>
+        Kost Sejahtera adalah hunian modern yang cocok bagi mahasiswa dan pekerja muda. 
+        Lokasinya strategis dekat kampus, pusat perbelanjaan, dan halte transportasi umum. 
+        Kamar sudah berfasilitas lengkap seperti AC, meja belajar, lemari, dan kamar mandi dalam. 
+        Suasana kost nyaman dan mendukung produktivitas harianmu.
+      </p>
+      <button class="info-button">Lihat Detail</button>
+    </div>
+  </div>
+</section>
+
+
+  <footer id="kontak">
+    <p>&copy; 2025 KostHub. All rights reserved.</p>
+  </footer>
+
+  <button id="backToTop" title="Kembali ke atas">⬆</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
